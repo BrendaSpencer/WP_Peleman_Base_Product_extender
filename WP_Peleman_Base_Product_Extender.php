@@ -36,4 +36,4 @@ register_activation_hook(__FILE__, function () {
 });
 
 // Initialize the plugin on every page load
-$plugin = new Plugin();  // This will initialize the admin menu on every page load.
+$plugin = new Plugin(); 
