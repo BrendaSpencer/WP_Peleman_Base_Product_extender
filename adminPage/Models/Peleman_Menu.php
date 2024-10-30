@@ -1,6 +1,6 @@
 <?php 
 declare(strict_types=1);
-namespace WSPBPE\adminPage\classes;
+namespace WSPBPE\adminPage\Models;
 
 class Peleman_Menu {
     public const PAGE_SLUG = 'peleman-control-panel';
@@ -25,6 +25,8 @@ class Peleman_Menu {
             120
         );
     }
+	
+
 
     public function render_tab_buttons()
     {
@@ -97,7 +99,7 @@ class Peleman_Menu {
                 <li>Woocommerce 7.2.0+</li>
             </ul>
             <hr>
-            <p>For proper communication with the <b>PIE</b>, the Peleman editor communicator  is required </p>
+            <p>For proper communication with the <b>PIE</b>, the Peleman editor communicator is required </p>
 			 <hr>
             <p>For proper communication with the <b>F2D</b>, the Peleman F2D communicator  is required </p>
 			<hr>
