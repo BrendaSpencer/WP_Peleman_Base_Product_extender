@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace WSPBPE\includes;
 
-use WSPBPE\adminPage\classes\Peleman_Menu;
+use WSPBPE\adminPage\Models\Peleman_Menu;
 use WSPBPE\includes\Enqueue_Scripts;
 use WSPBPE\includes\Enqueue_Styles;
+use WSPBPE\adminPage\Controllers\Base_Meta_Controller;
 
 class Plugin {
 
@@ -16,6 +17,7 @@ class Plugin {
     }
 
     public function initialize_plugin() {
+        $this->enqueue_extender_styles();
         if (is_admin()) {
             $this->create_extender_admin_classes();
         }
@@ -24,7 +26,7 @@ class Plugin {
     public function activate() {
         // Called once when the plugin is activated
         $this->enqueue_extender_scripts();
-        $this->enqueue_extender_styles();
+
     }
 
     private function enqueue_extender_scripts() {
@@ -38,5 +40,6 @@ class Plugin {
     public function create_extender_admin_classes() {
         // Instantiate the Peleman_Menu class
         new Peleman_Menu();
+        new Base_Meta_Controller();
     }
 }
