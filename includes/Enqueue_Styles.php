@@ -7,16 +7,19 @@ namespace WSPBPE\includes;
 class Enqueue_Styles {
     public function __construct(){
 	
-        add_action('wp_enqueue_scripts', [$this,'enqueue_styles'], 60);
+        add_action('admin_enqueue_scripts', [$this,'enqueue_styles']);
     }
 	
 	 public function enqueue_styles(){
-		error_log('Style is loaded!');
+		 $url = WSPBPE_DIRECTORY . 'assets/css/style.css';
+		
+		
         wp_enqueue_style(
-            'WSPBPE_admin_stylesheet',
-            plugin_dir_url(__FILE__) . 'assets/css/style.css',
-            array(),
-          '1.0.0'  // Add a version here to avoid errors
+            'admin_stylesheet',
+            $url,
+            [],
+          '1.0.0',
+            'all'
         );
     }
 	
