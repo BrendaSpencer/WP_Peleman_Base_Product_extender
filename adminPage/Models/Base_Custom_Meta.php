@@ -4,26 +4,40 @@ declare(strict_types=1);
 
 namespace WSPBPE\adminPage\Models;
 
-
-
-class Base_Custom_Meta {    
+class Base_Custom_Meta{ 
+	   public const CUSTOM_LABEL_KEY       = 'custom_variation_add_to_cart_label';
+	   public const UNIT_AMOUNT            = 'cart_units';
+	   public const MIN_QUANTITY			= 'min_quantity';
+	   public const INCREMENT_STEP			= 'increment_step';
+	   public const UNIT_PRICE             = 'cart_price';
+	   public const UNIT_CODE              = 'unit_code';
+	
+	private string $custom_cart_label;
     private int $cartUnits;
 	private int $minQuantity;
 	private int $incrementStep;
     private float $cartPrice;
     private string $unitCode;
-    private string $f2dArticleCode;
+	private string $customAddToCartLabel;
+    
 
-    public function __construct(){
-        
-    }
-    public function set_f2dArticleCode($article_Code){
-        $this->f2dArticleCode = $article_Code;
+    public function __construct($product){
+		        $this->customAddToCartLabel = (string)$product->get_meta('custom_variation_add_to_cart_label') ?: '';
+		        $this->cartUnits            = (int)$product->get_meta('cart_units') ?: 1;
+        		$this->minQuantity        	= (int)$product->get_meta('min_quantity') ?: 1;
+				$this->incrementStep       	= (int)$product->get_meta('increment_step') ?: 1;
+		        $this->cartPrice            = (float)$product->get_meta('cart_price') ?: 0.00;
+		        $this->unitCode             = (string)$product->get_meta('unit_code') ?: '';  
     }
 
-    public function get_f2dArticleCode(){
-        return $this->f2dArticleCode;
+    public function set_CustomAddToCartLabel($label){
+        $this->customAddToCartLabel = $label;
     }
+
+    public function get_customAddToCartLabel(){
+        return $this->customAddToCartLabel;
+    }
+
     public function set_unitCode($unit_code){
         $this->unitCode = $unit_code;
     }
@@ -59,18 +73,6 @@ class Base_Custom_Meta {
 
     public function get_cartUnits(){
         return $this->cartUnits;
-    }
-
-    #[\ReturnTypeWillChange]
-    public function jsonSerialize(){
-        return[
-            'cart_units' => $this->get_cartUnits(),
-            'min_quantity' => $this->get_minQuantity(),
-            'increment_step' => $this->get_incrementStep(),
-            'cart_price' => $this->get_cartPrice(),
-            'unit_code' => $this->get_unitCode(),
-            'f2d_artcd' => $this->get_f2dArticleCode(),
-        ];
     }
 
 }
