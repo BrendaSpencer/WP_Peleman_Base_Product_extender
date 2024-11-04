@@ -1,18 +1,18 @@
 <?php 
 declare(strict_types=1);
-namespace WSPBPE\adminPage\Models;
+namespace WSPBPE\adminPage\Views;
 
 class Peleman_Menu {
     public const PAGE_SLUG = 'peleman-control-panel';
 
     public function __construct() {
-        // Only hook the menu setup when the admin area is being viewed
+        
         if (is_admin()) {
             add_action('admin_menu', [$this, 'add_control_Peleman_panel']);
         }
     }
 
-    // Method to add the control panel menu
+  
     public function add_control_Peleman_panel(): void {
 
         add_menu_page(
@@ -42,11 +42,9 @@ class Peleman_Menu {
 
         $get = isset($_GET) ? wp_unslash($_GET) : array(); 
         $activeTab = isset($get['tab']) ? sanitize_text_field($get['tab']) : '';
-        error_log((string)$activeTab);
+        
 
-        /**
-         * @var Admin_Menu[]
-         */
+
         $tabGroups = apply_filters('WSPBPE_get_admin_menu_tabs', []);
 ?>
         <div class="wrap">
@@ -60,10 +58,6 @@ class Peleman_Menu {
                 foreach ($tabGroups as $key => $group) :
                 ?>
                    <a href="<?php echo esc_url($this->assemble_tab_url($key)); ?>" class=" nav-tab <?php echo esc_html($activeTab == $key ? 'nav_tab_active' : ''); ?>"><?php 					echo esc_html($key); ?></a>
-
-
-
-
                 <?php endforeach; ?>
             </h2>
             <form method="post" action='<?php echo esc_url(add_query_arg('tab', $activeTab, admin_url('options.php'))); ?>'>
