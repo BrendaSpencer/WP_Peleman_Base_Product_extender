@@ -7,6 +7,22 @@ namespace WSPBPE\adminPage\Views;
 use WSPBPE\adminPage\Models\Base_Custom_Meta;
 
 class Custom_Meta_Variable_Input { 
+	
+	public function save_variables(int $variation_id, int $loop){
+		$product = wc_get_product($variation_id);
+		$Base_Meta = new Base_Custom_Meta($product);
+		$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+		
+		
+			$Base_Meta->set_CustomAddToCartLabel(esc_attr(sanitize_text_field($post[Base_Custom_Meta::CUSTOM_LABEL_KEY][$loop])));
+			$Base_Meta->set_cartUnits((int)$post[Base_Custom_Meta::UNIT_AMOUNT][$loop] ?: 1);
+    	    $Base_Meta->set_minQuantity((int)$post[Base_Custom_Meta::MIN_QUANTITY][$loop] ?: 1, $variation_id);
+    	    $Base_Meta->set_incrementStep((int)$post[Base_Custom_Meta::INCREMENT_STEP][$loop] ?: 1, $variation_id);
+            $Base_Meta->set_cartPrice((float)$post[Base_Custom_Meta::UNIT_PRICE][$loop] ?: 0.0);
+            $Base_Meta->set_unitCode($post[Base_Custom_Meta::UNIT_CODE][$loop] ?: '');
+		
+		$Base_Meta->update_meta_data($product);
+	}
     
     public function render_Variable_fields($loop, $variation_data, $variation) {
 		?>
@@ -20,8 +36,8 @@ class Custom_Meta_Variable_Input {
 		$Base_Meta = new Base_Custom_Meta($product);
 		
         woocommerce_wp_text_input(array(
-            'id'            => $loop . Base_Custom_Meta::UNIT_PRICE,
-            'name'          => $loop . Base_Custom_Meta::UNIT_PRICE,
+            'id'            => Base_Custom_Meta::UNIT_PRICE . "[{$loop}]",
+            'name'          => Base_Custom_Meta::UNIT_PRICE  . "[{$loop}]",
             'label'         => __('Unit Purchase Price', 'Peleman-Webshop-Package'),
             'value'         =>  (string)$Base_Meta->get_cartPrice() ?: 0,
             'desc_tip'      => true,
@@ -33,8 +49,8 @@ class Custom_Meta_Variable_Input {
         ));
 
         woocommerce_wp_text_input(array(
-            'id'                => $loop . Base_Custom_Meta::UNIT_AMOUNT,
-            'name'              => $loop . Base_Custom_Meta::UNIT_AMOUNT,
+            'id'                =>  Base_Custom_Meta::UNIT_AMOUNT . "[{$loop}]",
+            'name'              => Base_Custom_Meta::UNIT_AMOUNT . "[{$loop}]",
             'label'             => __('Unit amount', 'Peleman-Webshop-Package'),
             'value'             => (string)$Base_Meta->get_cartUnits() ?: 1,
             'desc_tip'          => true,
@@ -49,8 +65,8 @@ class Custom_Meta_Variable_Input {
         ));
 
         woocommerce_wp_text_input(array(
-            'id'            => $loop . Base_Custom_Meta::UNIT_CODE,
-            'name'          => $loop . Base_Custom_Meta::UNIT_CODE,
+            'id'            =>   Base_Custom_Meta::UNIT_CODE  . "[{$loop}]",
+            'name'          =>   Base_Custom_Meta::UNIT_CODE . "[{$loop}]",
             'label'         => __('Unit code', 'Peleman-Webshop-Package'),
             'value'         => (string)$Base_Meta->get_unitCode(),
             'desc_tip'      => true,
@@ -60,8 +76,8 @@ class Custom_Meta_Variable_Input {
         ));
 
         woocommerce_wp_text_input(array(
-            'id'            => $loop . Base_Custom_Meta::CUSTOM_LABEL_KEY,
-            'name'          => $loop . Base_Custom_Meta::CUSTOM_LABEL_KEY,
+            'id'            =>  Base_Custom_Meta::CUSTOM_LABEL_KEY . "[{$loop}]",
+            'name'          =>  Base_Custom_Meta::CUSTOM_LABEL_KEY . "[{$loop}]",
             'label'         => __('Custom add to cart label', 'Peleman-Webshop-Package'),
             'value'         => $Base_Meta->get_customAddToCartLabel(),
             'desc_tip'      => true,
@@ -71,8 +87,8 @@ class Custom_Meta_Variable_Input {
         ));
 		
 		woocommerce_wp_text_input(array(
-            'id'                => $loop . Base_Custom_Meta::MIN_QUANTITY,
-            'name'              => $loop . Base_Custom_Meta::MIN_QUANTITY,
+            'id'                => Base_Custom_Meta::MIN_QUANTITY ."[{$loop}]",
+            'name'              => Base_Custom_Meta::MIN_QUANTITY . "[{$loop}]",
             'label'             => __('Minimum Quantity', 'Peleman-Webshop-Package'),
             'value'             => $Base_Meta->get_minQuantity(),
             'desc_tip'          => true,
@@ -87,8 +103,8 @@ class Custom_Meta_Variable_Input {
         ));		
 		
 		woocommerce_wp_text_input(array(
-            'id'                => $loop . Base_Custom_Meta::INCREMENT_STEP,
-            'name'              => $loop . Base_Custom_Meta::INCREMENT_STEP,
+            'id'                => Base_Custom_Meta::INCREMENT_STEP . "[{$loop}]",
+            'name'              => Base_Custom_Meta::INCREMENT_STEP . "[{$loop}]",
             'label'             => __('increment step', 'Peleman-Webshop-Package'),
             'value'             => $Base_Meta->get_incrementStep(),
             'desc_tip'          => true,

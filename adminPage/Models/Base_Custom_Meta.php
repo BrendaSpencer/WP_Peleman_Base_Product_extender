@@ -74,5 +74,19 @@ class Base_Custom_Meta{
     public function get_cartUnits(){
         return $this->cartUnits;
     }
+	
+	public function update_meta_data($product){
+		
+		$product->update_meta_data(self::CUSTOM_LABEL_KEY, $this->customAddToCartLabel);
+		$product->update_meta_data(self::UNIT_AMOUNT, $this->cartUnits);
+		$product->update_meta_data(self::MIN_QUANTITY, $this->minQuantity); 
+		$product->update_meta_data(self::INCREMENT_STEP, $this->incrementStep);
+		$product->update_meta_data(self::UNIT_PRICE, $this->cartPrice);
+		$product->update_meta_data(self::UNIT_CODE, $this->unitCode);
+		
+		$product->save();
+
+		
+	}
 
 }
