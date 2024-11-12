@@ -6,13 +6,26 @@ namespace WSPBPE\includes;
 
 class Enqueue_Scripts {
     public function __construct(){
-        add_action( 'wp_ajax_mpv_update_product_variation_data', 'mpv_update_product_variation_data' );
-        add_action( 'wp_ajax_nopriv_mpv_update_product_variation_data', 'mpv_update_product_variation_data' );
-        add_action( 'wp_enqueue_scripts', 'mpv_enqueue_custom_scripts' );
-
-        
+//         add_action( 'wp_ajax_mpv_update_product_variation_data', 'mpv_update_product_variation_data' );
+//         add_action( 'wp_ajax_nopriv_mpv_update_product_variation_data', 'mpv_update_product_variation_data' );
+//         add_action( 'wp_enqueue_scripts', 'mpv_enqueue_custom_scripts' );
+			add_action('admin_enqueue_scripts', [$this,'enqueue_menu_scripts']);   
 
     }
+	
+	public function enqueue_menu_scripts(){
+		$url = WSPBPE_DIRECTORY . 'assets/js/wsppe_product_menu.js';
+		$randomVersionNumber = wp_rand(0, 1000);
+        wp_enqueue_script(
+            'wsppe_product_menu',
+            $url,
+            array(),
+            $randomVersionNumber,
+			true // Load in the footer
+        );
+
+		
+	}
 
     // Enqueue scripts and styles
 function mpv_enqueue_custom_scripts() {

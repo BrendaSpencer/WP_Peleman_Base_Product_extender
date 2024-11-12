@@ -12,13 +12,12 @@ class Enqueue_Styles {
 	
 	 public function enqueue_styles(){
 		 $url = WSPBPE_DIRECTORY . 'assets/css/style.css';
-		
-		
+		 
         wp_enqueue_style(
             'admin_stylesheet',
             $url,
-            [],
-          '1.0.0',
+            array(),
+          '2.0.0',
             'all'
         );
     }

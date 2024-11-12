@@ -29,8 +29,9 @@ if (!is_plugin_active('woocommerce/woocommerce.php')) {
     wp_die(esc_html('The "WooCommerce" plugin has not been activated. ← <a href="' . $site_domain . '/wp-admin/plugins.php"> Please activate it first.</a>'));
 }
 
-!defined('WSPBPE_DIRECTORY') ? define('WSPBPE_DIRECTORY', plugin_dir_path(__FILE__)) : null;
+!defined('WSPBPE_DIRECTORY') ? define('WSPBPE_DIRECTORY', plugin_dir_url(__FILE__)) : null;
 
+error_log('dirpath === ' . plugin_dir_url(__FILE__));
 register_activation_hook(__FILE__, function () {
 	$plugin = new Plugin();
     $plugin->activate();
