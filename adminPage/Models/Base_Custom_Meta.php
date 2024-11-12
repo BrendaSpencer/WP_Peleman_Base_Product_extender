@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace WSPBPE\adminPage\Models;
 
 class Base_Custom_Meta{ 
-	   public const CUSTOM_LABEL_KEY       = 'custom_variation_add_to_cart_label';
-	   public const UNIT_AMOUNT            = 'cart_units';
-	   public const MIN_QUANTITY			= 'min_quantity';
-	   public const INCREMENT_STEP			= 'increment_step';
-	   public const UNIT_PRICE             = 'cart_price';
-	   public const UNIT_CODE              = 'unit_code';
+	   public const CUSTOM_LABEL_KEY   = 'custom_variation_add_to_cart_label';
+	   public const UNIT_AMOUNT        = 'cart_units';
+	   public const MIN_QUANTITY	   = 'min_quantity';
+	   public const INCREMENT_STEP	   = 'increment_step';
+	   public const UNIT_PRICE         = 'cart_price';
+	   public const UNIT_CODE          = 'unit_code';
 	
 	private string $custom_cart_label;
     private int $cartUnits;

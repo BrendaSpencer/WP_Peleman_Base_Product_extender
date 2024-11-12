@@ -18,7 +18,8 @@ class Plugin {
     }
 
     public function initialize_plugin() {
-	$this->enqueue_extender_styles();
+	     new Enqueue_Styles();
+		 new Enqueue_Scripts();
 		 
         if (is_admin()) {
             $this->create_extender_admin_classes();
@@ -31,13 +32,7 @@ class Plugin {
         
     }
 
-    private function enqueue_extender_scripts() {
-        new Enqueue_Scripts();
-    }
 
-    private function enqueue_extender_styles() {
-        new Enqueue_Styles();
-    }
 
     public function create_extender_admin_classes() {
       
