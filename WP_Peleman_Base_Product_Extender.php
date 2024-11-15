@@ -31,10 +31,9 @@ if (!is_plugin_active('woocommerce/woocommerce.php')) {
 
 !defined('WSPBPE_DIRECTORY') ? define('WSPBPE_DIRECTORY', plugin_dir_url(__FILE__)) : null;
 
-error_log('dirpath === ' . plugin_dir_url(__FILE__));
 register_activation_hook(__FILE__, function () {
 	$plugin = new Plugin();
     $plugin->activate();
 });
 
-	$plugin = new Plugin();
+$plugin = new Plugin();

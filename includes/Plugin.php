@@ -12,30 +12,26 @@ use WSPBPE\includes\Enqueue_Styles;
 class Plugin {
 
     public function __construct() {
-		
         add_action('plugins_loaded', [$this, 'initialize_plugin']);
-	
     }
 
     public function initialize_plugin() {
-	     new Enqueue_Styles();
-		 new Enqueue_Scripts();
-		 
+
+	    new Enqueue_Styles();
+		new Enqueue_Scripts();
+		
         if (is_admin()) {
-            $this->create_extender_admin_classes();
-			
+            $this->create_extender_admin_classes();	
         }
     }
 
     public function activate() {
-
-        
     }
 
 
 
     public function create_extender_admin_classes() {
-      
+    
         new Peleman_Menu();
 		new Base_Meta_Controller();
     }

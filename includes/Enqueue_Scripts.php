@@ -36,8 +36,8 @@ function mpv_enqueue_custom_scripts() {
         'mpv-custom-variation', 
         plugin_dir_url( __FILE__ ) . 'js/custom-product-variation.js', 
         array( 'jquery' ),
-         null, 
-         true );
+        null, 
+        true );
 
     
     wp_localize_script( 'mpv-custom-variation', 'mpv_variation_params', array(
