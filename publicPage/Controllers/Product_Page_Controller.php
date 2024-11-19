@@ -15,7 +15,7 @@ class Product_Page_Controller{
         
         //$product = new Product();
 
-        include_once WSPBPE_PATH . 'publicPage/Views/Meta_Template.php';
+        include_once WSPBPE_PATH . 'publicPage/Views/meta.php';
 
     }
 }
