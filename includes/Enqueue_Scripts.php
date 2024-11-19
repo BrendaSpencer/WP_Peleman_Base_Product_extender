@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace WSPBPE\includes;
 
+use WC_Product_Variation;
+
 class Enqueue_Scripts {
     public function __construct(){
-//         add_action( 'wp_ajax_mpv_update_product_variation_data', 'mpv_update_product_variation_data' );
-//         add_action( 'wp_ajax_nopriv_mpv_update_product_variation_data', 'mpv_update_product_variation_data' );
-//         add_action( 'wp_enqueue_scripts', 'mpv_enqueue_custom_scripts' );
-			add_action('admin_enqueue_scripts', [$this,'enqueue_menu_scripts']);   
+		
+		add_action( 'wp_enqueue_scripts',[$this, 'mpv_enqueue_custom_scripts' ]);
+        add_action( 'wp_ajax_mpv_update_product_variation_data', [$this,'mpv_update_product_variation_data' ]);
+        add_action( 'wp_ajax_nopriv_mpv_update_product_variation_data', [$this,'mpv_update_product_variation_data' ]);
+
+		add_action('admin_enqueue_scripts', [$this,'enqueue_menu_scripts']);   
 
     }
 	
@@ -21,35 +25,35 @@ class Enqueue_Scripts {
             $url,
             array(),
             $randomVersionNumber,
-			true // Load in the footer
+			true 
         );
 
 		
 	}
 
-    // Enqueue scripts and styles
-function mpv_enqueue_custom_scripts() {
+  
+	public function mpv_enqueue_custom_scripts() {
+		error_log('mpv_enqueue_custom_scripts');
 
-
-
-    wp_enqueue_script( 
-        'mpv-custom-variation', 
-        plugin_dir_url( __FILE__ ) . 'js/custom-product-variation.js', 
-        array( 'jquery' ),
-        null, 
-        true );
-
+		wp_enqueue_script( 
+			'mpv-custom-variation', 
+			WSPBPE_DIRECTORY  . 'assets/js/custom-product-variation.js', 
+			array( 'jquery' ),
+			null, 
+			true 
+		);
     
-    wp_localize_script( 'mpv-custom-variation', 'mpv_variation_params', array(
-        'ajax_url' => admin_url( 'admin-ajax.php' ),
-        'nonce'    => wp_create_nonce( 'mpv_variation_nonce' ),
-    ));
-}
+		wp_localize_script( 'mpv-custom-variation', 'mpv_variation_params', array(
+			'ajax_url' => admin_url( 'admin-ajax.php' ),
+			'nonce'    => wp_create_nonce( 'mpv_variation_nonce' ),
+		));
+	}
 
 
 
-    function mpv_update_product_variation_data() {
-        // Check nonce for security
+    public function mpv_update_product_variation_data() {
+			error_log('mpv_update_product_variation_data');
+        
         if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( $_POST['nonce'], 'mpv_variation_nonce' ) ) {
             wp_send_json_error( 'Invalid request.' );
             wp_die();
