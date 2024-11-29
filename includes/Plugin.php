@@ -9,6 +9,7 @@ use WSPBPE\adminPage\Controllers\Base_Meta_Controller;
 use WSPBPE\publicPage\Controllers\Product_Page_Controller;
 use WSPBPE\includes\Enqueue_Scripts;
 use WSPBPE\includes\Enqueue_Styles;
+use WSPBPE\publicPage\Views\Overwrite_Templates;
 
 class Plugin {
 
@@ -33,7 +34,7 @@ class Plugin {
     }
 	
 	    public function create_extender_public_classes() {
-    
+        new Overwrite_Templates();
 		new Product_Page_Controller();
     }
 
