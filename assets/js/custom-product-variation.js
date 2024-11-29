@@ -1,12 +1,10 @@
 jQuery(document).ready(function ($) {
-	// Listen for variation changes
 	$("form.variations_form").on("change", ".variations select", function () {
-		// Get form data and selected variation attributes
 		var form = $("form.variations_form");
 		var product_id = form.data("product_id");
+		var variation_id = $(".variation_id").val();
 		var selected_options = form.serialize();
 
-		// Make AJAX call to update product details
 		$.ajax({
 			url: mpv_variation_params.ajax_url,
 			type: "POST",
@@ -14,13 +12,13 @@ jQuery(document).ready(function ($) {
 				action: "mpv_update_product_variation_data",
 				product_id: product_id,
 				selected_options: selected_options,
+				variation_id: variation_id,
 				nonce: mpv_variation_params.nonce,
 			},
 			success: function (response) {
 				if (response.success) {
-					// Update product price, stock, etc.
-					$(".woocommerce-variation-price .price").html(response.data.price);
-					$(".stock").html(response.data.stock_status);
+					$(".product-meta").html(response.data.meta_html);
+					$(".product-price").html(response.data.price_html);
 				}
 			},
 		});
