@@ -34,7 +34,7 @@ class Enqueue_Scripts {
 
   
 	public function mpv_enqueue_custom_scripts() {
-		error_log('mpv_enqueue_custom_scripts');
+		
 
 		wp_enqueue_script( 
 			'mpv-custom-variation', 
