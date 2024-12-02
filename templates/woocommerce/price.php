@@ -11,8 +11,7 @@ if($variation){
 	global $product;
 }
 
-		error_log(' === inside the price view === ');
-		error_log('PRODUCT ===   ' . $product);
+
 
 // $cartUnits = (int)$product->get_meta('cart_units');
 // $cartPrice = (float)$product->get_meta('cart_price');
@@ -22,4 +21,5 @@ if($variation){
 // }
 
 ?>
-<p class="product-price <?php echo esc_attr(apply_filters('woocommerce_product_price_class', 'price')); ?>"><?= $product->get_price() ?></p>
+
+<p class="product-price <?php echo esc_attr( apply_filters( 'woocommerce_product_price_class', 'price' ) ); ?>"><?php echo $product->get_price_html(); ?></p>
