@@ -5,6 +5,7 @@ namespace WSPBPE\publicPage\Controllers;
 use WSPBPE\publicPage\Models\Product;
 use WC_Product_Variation;
 use WC_Data_Store;
+use WC;
 
 
 class Variable_Page_Controller{
@@ -30,35 +31,40 @@ class Variable_Page_Controller{
 			$data_store = WC_Data_Store::load('product');
         	$variation_id = $data_store->find_matching_product_variation($product, $selected_options);
 	
-        	if ( $variation_id ) {
-				
-            	$variation = new WC_Product_Variation( $variation_id );
-				
-				ob_start();
-					$meta_html = wc_get_template(
-						'meta.php',
-						['variation' => $variation],
-						'',
-						WSPBPE_PATH . 'templates/woocommerce/'
-					);
-				$meta_html = ob_get_clean();
-					ob_start();
-					$price_html = wc_get_template(
-						'price.php',
-						['variation' => $variation],
-						'',
-						WSPBPE_PATH . 'templates/woocommerce/'
-					);
-				$price_html = ob_get_clean();
-				wp_send_json_success([
-					'meta_html' => $meta_html,
-					'price_html' => $price_html,
-				]);
-				
-     		}   
-		
-		}
+            if ($variation_id) {
+				error_log('variation id in Variable Page Controller === '. $variation_id);
+				WC()->session->set('current_variation_id', '');
+				WC()->session->set('current_variation_id', $variation_id);
+                $variation = new \WC_Product_Variation($variation_id);
 
-	}
+                ob_start();
+                $meta_html = wc_get_template(
+                    'meta.php',
+                    ['variation' => $variation],
+                    '',
+                    WSPBPE_PATH . 'templates/woocommerce/'
+                );
+                $meta_html = ob_get_clean();
 
+                ob_start();
+                $price_html = wc_get_template(
+                    'price.php',
+                    ['variation' => $variation],
+                    '',
+                    WSPBPE_PATH . 'templates/woocommerce/'
+                );
+                $price_html = ob_get_clean();
+
+                
+                do_action('wspbpe_variation_update', $product, $variation, $meta_html, $price_html,'woocommerce_before_add_to_cart_button' );
+								
+
+                wp_send_json_success([
+                    'meta_html' => $meta_html,
+                    'price_html' => $price_html,
+                ]);
+
+            }
+        }
+    }
 }
